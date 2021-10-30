@@ -6,12 +6,12 @@ Picks Only what You Want
 
 ## How to Use
 
-`cd` to the [src](\src) directory and execute,
+`cd` to the [src](src) directory and execute,
 
 `go run main.go gen .`
 
 This will generate the Dockerfile within the src directory. Once generated please make sure that the golang version in
-the Dockerfile is 1.17. Also you can make use of the pre-built Dockerfile under [gen](\gen).
+the Dockerfile is 1.17. Also you can make use of the pre-built Dockerfile under [gen](gen).
 
 Then, build and tag the docker image giving any tag you like.
 
@@ -52,5 +52,5 @@ Simply execute
 kustomize build --enable-alpha-plugins > output.yaml
 ```
 
-within the [sample](\sample) directory after replacing the docker image name [here](\sample\resourcepicker.yaml). Now
+within the [sample](sample) directory after replacing the docker image name [here](sample/resourcepicker.yaml). Now
 you will see that the output only contains the two namespaces and the deployment1.
