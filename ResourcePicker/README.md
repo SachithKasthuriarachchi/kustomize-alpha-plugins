@@ -52,5 +52,5 @@ Simply execute
 kustomize build --enable-alpha-plugins > output.yaml
 ```
 
-within the [sample](sample) directory after replacing the docker image name [here](sample/resourcepicker.yaml). Now
+within the [sample](sample) directory after replacing the docker image name [here](sample/resourcepicker.yaml#L8). Now
 you will see that the output only contains the two namespaces and the deployment1.
