@@ -1,0 +1,6 @@
+resources:
+  - deployments
+  - namespace
+
+transformers:
+  - resourcepicker.yaml
