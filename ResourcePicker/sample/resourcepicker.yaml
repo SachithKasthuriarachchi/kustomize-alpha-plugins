@@ -8,9 +8,6 @@ metadata:
         image: <Docker image name with tag>
 spec:
   resourceNames:
-    - identity-server
-    - idp
-    - endpoints-reader-role
-    - endpoints-reader-role-wso2-binding
+    - deployment1
   resourceKinds:
     - Namespace
