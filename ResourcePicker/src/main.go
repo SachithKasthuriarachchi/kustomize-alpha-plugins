@@ -72,8 +72,18 @@ func main() {
     }
     return outNodes, nil
   }
+
+  // here, Config is the struct capable of receiving the data from ResourceList.functionConfig.
+  // FilterFunc will be used to process the ResourceList's items.
   p := framework.SimpleProcessor{Config: config, Filter: kio.FilterFunc(fn)}
+
+  // The following cmd reads the input from STDIN and invokes the above ResourceList Processor (p)
+  // StandaloneDisabled tells the command to ignore all the arguments. Arguments are not needed
+  // since we are passing a ResourceList to the STDIN. The output will also be of same type as the input
+  // Any errors will be printed to the STDERR due to the `false` value specified for `noPrintError`.
   cmd := command.Build(p, command.StandaloneDisabled, false)
+
+  // Adds a "gen" subcommand to create a Dockerfile for building the function into a container image
   command.AddGenerateDockerfile(cmd)
   if err := cmd.Execute(); err != nil {
     os.Exit(1)
