@@ -10,21 +10,20 @@ import (
 )
 
 type Spec struct {
-  Names []string `yaml:"resourceNames" json:"resourceNames"`
-  Kinds []string `yaml:"resourceKinds,omitempty" json:"kinds,omitempty"`
+    Kind string `yaml:"kind,omitempty" json:"kind,omitempty"`
+    AllowedResources []string `yaml:"allowedResources,omitempty" json:"allowedResources,omitempty"`
 }
 
 // The yaml will look like the following
 // ---
-// kind: ResourcePicker
+// kind: ResourceRemover
 // spec:
-//   resourceNames:
-//   - list_goes_on
-//   resourceKinds:
-//   - Namespace
-//   - Deployment //etc.
+//   kind: Deployment
+//   allowedResources:
+//   - resourceName1
+//   - resourceName2
 // ---
-type ResourcePicker struct {
+type ResourceRemover struct {
   Spec Spec `yaml:"spec,omitempty" json:"spec,omitempty"`
 }
 
@@ -34,7 +33,7 @@ type ResourcePicker struct {
 
 func stringInArray(a string, list []string) bool {
   for _, b := range list {
-    if (strings.Contains(a, b)) {
+    if (strings.HasPrefix(b, a)) {
       return true
     }
   }
@@ -57,7 +56,7 @@ func stringInArrayExact(a string, list []string) bool {
 // This function will filter out the resources by
 // its name and/or kind
 func main() {
-  config := new(ResourcePicker)
+  config := new(ResourceRemover)
   fn := func(items []*yaml.RNode) ([]*yaml.RNode, error) {
     var outNodes []*yaml.RNode
     for i := range items {
@@ -66,7 +65,12 @@ func main() {
       if err != nil {
         return nil, err
       }
-      if stringInArrayExact(kind, config.Spec.Kinds) || stringInArray(meta.Name, config.Spec.Names) {
+      if stringInArrayExact(kind, config.Spec.Kind) {
+        if stringInArray(meta.Name, config.Spec.AllowedResources) {
+            outNodes = append(outNodes, items[i])
+        }
+      }
+      else {
         outNodes = append(outNodes, items[i])
       }
     }
