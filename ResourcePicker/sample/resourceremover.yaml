@@ -1,0 +1,12 @@
+apiVersion: wso2.api/v1
+kind: ResourceRemover
+metadata:
+  name: resourceremover
+  annotations:
+    config.kubernetes.io/function: |
+      container:
+        image: sachithnilmantha/resourceremover:latest
+spec:
+  kind: Deployment
+  allowedResources:
+    - deployment1

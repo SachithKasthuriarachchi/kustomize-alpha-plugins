@@ -65,13 +65,12 @@ func main() {
       if err != nil {
         return nil, err
       }
-      if stringInArrayExact(kind, config.Spec.Kind) {
+      if kind == config.Spec.Kind {
         if stringInArray(meta.Name, config.Spec.AllowedResources) {
             outNodes = append(outNodes, items[i])
         }
-      }
-      else {
-        outNodes = append(outNodes, items[i])
+      } else {
+          outNodes = append(outNodes, items[i])
       }
     }
     return outNodes, nil
